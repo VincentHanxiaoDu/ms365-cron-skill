@@ -13,10 +13,10 @@ All scripts are in the `scripts/` subdirectory relative to this SKILL.md.
 
 | Script | Purpose |
 |---|---|
-| `setup.py` | One-time setup: Azure App auth + user config |
-| `auth.py` | Token manager (called by poll scripts) |
-| `poll_email.py` | Fetch unread inbox emails since last check |
-| `poll_teams.py` | Fetch new Teams chat + channel messages |
+| `setup.mjs` | One-time setup: Azure App auth + user config |
+| `auth.mjs` | Token manager (called by poll scripts) |
+| `poll_email.mjs` | Fetch unread inbox emails since last check |
+| `poll_teams.mjs` | Fetch new Teams chat + channel messages |
 
 Config and state stored in `~/.openclaw/ms365-monitor/`.
 
@@ -24,16 +24,16 @@ Config and state stored in `~/.openclaw/ms365-monitor/`.
 
 ### First-time Setup
 
-1. Run `setup.py` — uses built-in public client ID (no Azure setup needed for most users), runs device code auth, saves user profile
+1. Run `setup.mjs` — uses built-in public client ID (no Azure setup needed for most users), runs device code auth, saves user profile
 2. Test both pollers and verify output
 3. Create cron jobs (see Cron Configuration below)
 
-> **Note:** No Azure App Registration needed. The skill uses Softeria's pre-registered public client ID (`084a3e9f-a9f4-43f7-89f9-d229cf97853e`). To use your own app, run `setup.py --reset-all`.
+> **Note:** No Azure App Registration needed. The skill uses Softeria's pre-registered public client ID (`084a3e9f-a9f4-43f7-89f9-d229cf97853e`). To use your own app, run `setup.mjs --reset-all`.
 
 ### Re-authentication
 
 ```bash
-python3 setup.py --reset-auth
+node setup.mjs --reset-auth
 ```
 
 ### On-demand Check
