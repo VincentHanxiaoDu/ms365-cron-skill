@@ -16,6 +16,9 @@ CONFIG_PATH = os.path.expanduser("~/.openclaw/ms365-monitor/config.json")
 CACHE_PATH = os.path.expanduser("~/.openclaw/ms365-monitor/token-cache.json")
 SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# Default public client ID from Softeria ms-365-mcp-server (pre-registered, no Azure setup needed)
+DEFAULT_CLIENT_ID = "084a3e9f-a9f4-43f7-89f9-d229cf97853e"
+
 
 def load_config():
     if os.path.exists(CONFIG_PATH):
@@ -85,21 +88,12 @@ def main():
 
     config = load_config()
 
-    # --- Step 1: Azure App Registration ---
-    if not config.get("client_id") or args.reset_all:
-        print("Step 1: Azure App Registration")
-        print("-" * 40)
-        print("You need a Microsoft Azure App Registration (free).")
-        print("See references/azure-setup.md for instructions.\n")
-        print("Required permissions: Mail.Read, Chat.Read, ChannelMessage.Read.All, User.Read, offline_access\n")
-
-        client_id = prompt("Azure App Client ID", config.get("client_id"))
-        if not client_id:
-            print("Error: Client ID is required.")
-            sys.exit(1)
-        config["client_id"] = client_id
+    # --- Step 1: Client ID (optional — default works for most users) ---
+    if not config.get("client_id"):
+        config["client_id"] = DEFAULT_CLIENT_ID
         save_config(config)
-        print()
+        print(f"Step 1: Using default Azure App Client ID (Softeria ms-365-mcp-server, public).")
+        print(f"        To use your own app, run: setup.py --reset-all and enter a custom Client ID.\n")
 
     # --- Step 2: Authentication ---
     print("Step 2: Microsoft 365 Authentication")

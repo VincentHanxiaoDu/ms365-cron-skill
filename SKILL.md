@@ -24,10 +24,11 @@ Config and state stored in `~/.openclaw/ms365-monitor/`.
 
 ### First-time Setup
 
-1. Read `references/azure-setup.md` to explain Azure App Registration to user
-2. Run `setup.py` — guides user through Azure client ID → device code auth → user profile config
-3. Test both pollers and verify output
-4. Create cron jobs (see Cron Configuration below)
+1. Run `setup.py` — uses built-in public client ID (no Azure setup needed for most users), runs device code auth, saves user profile
+2. Test both pollers and verify output
+3. Create cron jobs (see Cron Configuration below)
+
+> **Note:** No Azure App Registration needed. The skill uses Softeria's pre-registered public client ID (`084a3e9f-a9f4-43f7-89f9-d229cf97853e`). To use your own app, run `setup.py --reset-all`.
 
 ### Re-authentication
 
