@@ -16,7 +16,7 @@ CACHE_PATH = os.path.expanduser("~/.openclaw/ms365-monitor/token-cache.json")
 CONFIG_PATH = os.path.expanduser("~/.openclaw/ms365-monitor/config.json")
 
 AUTHORITY = "https://login.microsoftonline.com/common/oauth2/v2.0"
-SCOPES = "https://graph.microsoft.com/Mail.Read https://graph.microsoft.com/Chat.Read https://graph.microsoft.com/ChannelMessage.Read.All https://graph.microsoft.com/User.Read offline_access"
+SCOPES = "https://graph.microsoft.com/Mail.Read https://graph.microsoft.com/Chat.Read https://graph.microsoft.com/User.Read offline_access"
 
 # Default public client ID from Softeria ms-365-mcp-server (pre-registered, no setup needed)
 DEFAULT_CLIENT_ID = "084a3e9f-a9f4-43f7-89f9-d229cf97853e"

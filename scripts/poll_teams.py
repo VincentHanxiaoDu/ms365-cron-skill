@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 MS365 Monitor — Teams Poller
-Fetches new Teams messages (chats + channels) since last check.
+Fetches new Teams chat messages since last check.
 Outputs JSON for the agent to evaluate relevance.
 
 Usage: python3 poll_teams.py
@@ -121,47 +121,6 @@ def main():
                 "mentioned": is_mentioned,
                 "link": f"https://teams.microsoft.com/l/message/{chat_id}/{msg.get('id', '')}",
             })
-
-    # 2. Channel messages (joined teams)
-    teams = graph_get(token, "/me/joinedTeams", {"$select": "id,displayName"})
-    for team in teams.get("value", []):
-        team_id = team.get("id")
-        team_name = team.get("displayName", "")
-        channels = graph_get(token, f"/teams/{team_id}/channels", {"$select": "id,displayName"})
-        for channel in channels.get("value", [])[:5]:
-            ch_id = channel.get("id")
-            ch_name = channel.get("displayName", "")
-            msgs = graph_get(token, f"/teams/{team_id}/channels/{ch_id}/messages", {
-                "$top": "10",
-                "$orderby": "createdDateTime desc",
-            })
-            for msg in msgs.get("value", []):
-                created = msg.get("createdDateTime", "")
-                if created <= last_check:
-                    continue
-                msg_from = msg.get("from") or {}
-                sender_id = (msg_from.get("user") or {}).get("id", "")
-                if sender_id == my_id:
-                    continue
-                sender_name = (msg_from.get("user") or {}).get("displayName", "Unknown")
-                body = strip_html(msg.get("body", {}).get("content", ""))
-                if not body:
-                    continue
-
-                mentions = [(((m.get("mentioned") or {}).get("user")) or {}).get("id", "")
-                            for m in (msg.get("mentions") or [])]
-                is_mentioned = my_id in mentions
-
-                new_messages.append({
-                    "type": "channel",
-                    "team": team_name,
-                    "channel": ch_name,
-                    "sender": sender_name,
-                    "time": created,
-                    "body": body,
-                    "mentioned": is_mentioned,
-                    "link": f"https://teams.microsoft.com/l/message/{ch_id}/{msg.get('id', '')}",
-                })
 
     now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     state["last_teams_check"] = now
