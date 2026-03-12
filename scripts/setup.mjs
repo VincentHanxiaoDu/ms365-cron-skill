@@ -52,7 +52,7 @@ function verifyAuth() {
   try {
     const result = execFileSync(process.execPath, [path.join(__dirname, "auth.mjs")], {
       encoding: "utf-8",
-      stdio: ["pipe", "pipe", "pipe"],
+      stdio: ["inherit", "pipe", "inherit"],
     });
     const token = result.trim();
 
