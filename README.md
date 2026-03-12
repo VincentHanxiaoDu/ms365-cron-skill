@@ -21,8 +21,8 @@ The skill will guide you through the rest.
 
 ## Requirements
 
-- Python 3.8+
-- A free [Azure App Registration](references/azure-setup.md) (Microsoft account)
+- Node.js 18+
+- A free [Azure App Registration](references/azure-setup.md) (Microsoft account) — optional, a default public client ID is included
 - OpenClaw with a connected channel (Telegram / Discord / etc.)
 
 ## File Structure
@@ -31,10 +31,10 @@ The skill will guide you through the rest.
 ms365-monitor/
 ├── SKILL.md                  # Skill definition + agent instructions
 ├── scripts/
-│   ├── setup.py              # One-time setup wizard
-│   ├── auth.py               # Token manager (device code + auto-refresh)
-│   ├── poll_email.py         # Email poller
-│   └── poll_teams.py         # Teams poller
+│   ├── setup.mjs             # One-time setup wizard
+│   ├── auth.mjs              # Token manager (device code + auto-refresh)
+│   ├── poll_email.mjs        # Email poller
+│   └── poll_teams.mjs        # Teams poller
 └── references/
     └── azure-setup.md        # Azure App Registration guide
 ```

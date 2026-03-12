@@ -41,8 +41,8 @@ node setup.mjs --reset-auth
 Run pollers directly and summarize output for the user:
 
 ```bash
-python3 poll_email.py
-python3 poll_teams.py
+node poll_email.mjs
+node poll_teams.mjs
 ```
 
 ## Cron Configuration
@@ -52,7 +52,7 @@ Create two cron jobs after setup. Use the user's connected channel for delivery.
 **Email cron** (every 15 min recommended):
 
 ```
-payload.message: Run: python3 <SKILL_DIR>/poll_email.py
+payload.message: Run: node <SKILL_DIR>/poll_email.mjs
 
 Evaluate which emails need the user's attention (direct address, approval needed, urgent, mentions user by name/email). 
 
@@ -65,7 +65,7 @@ Output rules:
 **Teams cron** (every 5 min recommended):
 
 ```
-payload.message: Run: python3 <SKILL_DIR>/poll_teams.py
+payload.message: Run: node <SKILL_DIR>/poll_teams.mjs
 
 Evaluate which messages need the user's attention. User's full name: <NAME>, email: <EMAIL>.
 Push if: message explicitly mentions user, user is @mentioned, 1:1 chat message, needs their decision/approval, urgent.
@@ -133,7 +133,6 @@ message summary
 
 ## Troubleshooting
 
-- **Auth fails**: Run `python3 setup.py --reset-auth`
+- **Auth fails**: Run `node setup.mjs --reset-auth`
 - **No messages appearing**: Check `~/.openclaw/ms365-monitor/` state files — timestamps may be too recent
-- **ChannelMessage.Read.All error**: Requires admin consent in Azure — see `references/azure-setup.md`
 - **Reset state** (re-scan all recent messages): Delete `email_state.json` or `teams_state.json` in `~/.openclaw/ms365-monitor/`

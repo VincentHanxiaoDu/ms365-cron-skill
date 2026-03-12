@@ -16,7 +16,7 @@ MS365 Monitor uses Microsoft Graph API to read your email and Teams messages. Yo
 
 ### 2. Copy the Client ID
 
-On the app overview page, copy the **Application (client) ID** — this is what `setup.py` asks for.
+On the app overview page, copy the **Application (client) ID** — this is what `setup.mjs` asks for.
 
 ### 3. Enable public client flow
 
@@ -30,7 +30,6 @@ Go to **API permissions** → **Add a permission** → **Microsoft Graph** → *
 |---|---|
 | `Mail.Read` | Read inbox emails |
 | `Chat.Read` | Read Teams chat messages |
-| `ChannelMessage.Read.All` | Read Teams channel messages |
 | `User.Read` | Get your profile info |
 | `offline_access` | Keep you logged in with refresh tokens |
 
@@ -40,13 +39,13 @@ Click **Grant admin consent** (or ask your tenant admin if required).
 
 - No client secret needed — this uses device code flow (public client)
 - Tokens are cached in `~/.openclaw/ms365-monitor/token-cache.json`
-- Run `setup.py --reset-auth` to re-authenticate without changing config
-- Run `setup.py --reset-all` to start over completely
+- Run `node setup.mjs --reset-auth` to re-authenticate without changing config
+- Run `node setup.mjs --reset-all` to start over completely
 
 ## Troubleshooting
 
-**"Need admin approval"**: Your organization may require admin consent for `ChannelMessage.Read.All`. Ask your IT admin to grant it, or use the Azure portal to pre-consent.
+**"Need admin approval"**: Your organization may require admin consent for certain permissions. Ask your IT admin to grant consent, or use the Azure portal to pre-consent.
 
 **"Invalid client"**: Double-check the Client ID and ensure "Allow public client flows" is enabled.
 
-**Token expires**: The script auto-refreshes. If refresh fails, run `setup.py --reset-auth`.
+**Token expires**: The script auto-refreshes. If refresh fails, run `node setup.mjs --reset-auth`.
