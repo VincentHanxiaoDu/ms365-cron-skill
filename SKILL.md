@@ -54,11 +54,11 @@ Create two cron jobs after setup. Use the user's connected channel for delivery.
 ```
 payload.message: Run: node <SKILL_DIR>/poll_email.mjs
 
-Evaluate which emails need the user's attention (direct address, approval needed, urgent, mentions user by name/email). 
+Evaluate which emails need the user's attention (direct address, approval needed, urgent, mentions user by name/email).
 
-Output rules:
-- Relevant email found: output report (sender, subject, summary, webLink)
-- Nothing relevant: output only NO_REPLY (no other text)
+STRICT output rules — no exceptions:
+- Relevant email found: output ONLY the report (sender, subject, summary, webLink). No preamble.
+- Nothing relevant: your ENTIRE reply must be the single token NO_REPLY — no explanation, no reasoning, no summary of what you saw. Just: NO_REPLY
 - Links: always use webLink from poll output (outlook.office365.com/owa/?ItemID=... format)
 ```
 
@@ -71,9 +71,9 @@ Evaluate which messages need the user's attention. User's full name: <NAME>, ema
 Push if: message explicitly mentions user, user is @mentioned, 1:1 chat message, needs their decision/approval, urgent.
 Do NOT push for: other people with same surname, group chat noise, messages not involving user.
 
-Output rules:
-- Relevant message found: output report (sender, chat/channel, summary, link)
-- Nothing relevant: output only NO_REPLY (no other text)
+STRICT output rules — no exceptions:
+- Relevant message found: output ONLY the report (sender, chat/channel, summary, link). No preamble.
+- Nothing relevant: your ENTIRE reply must be the single token NO_REPLY — no explanation, no reasoning, no summary of what you saw. Just: NO_REPLY
 ```
 
 Replace `<SKILL_DIR>` with the absolute path to the skill's `scripts/` directory.
